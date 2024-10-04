@@ -45,7 +45,7 @@ class Post(models.Model):
         ]
 
 
-    #over_ride
+    #over_ridem
     def __str__(self):
         return self.title
 
