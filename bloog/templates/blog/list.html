@@ -1,8 +1,14 @@
 {% extends 'parent/base.html' %}
 {% block title %} post list {% endblock %}
 {% block content %}
+    <h1>postlist</h1>
     {% for post in posts %}
-       {{ post }}
+    <h2>
+        <a href="">{{ post }}</a>
+    </h2>
+    <p>
+        {{post.description | truncatewords:2 }}
+    </p>
     {% endfor %}
 <hr>
 {% endblock %}
