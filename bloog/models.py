@@ -1,7 +1,8 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
-
+from django_jalali.db import models as jmodels
+from django.urls import reverse
 
 #Manager
 class publishedManager(models.Manager):
@@ -22,19 +23,20 @@ class Post(models.Model):
         REGECTED='RG','REGECTED'
 
 
-    title = models.CharField(max_length=20)
-    description = models.TextField()
-    slug = models.SlugField(max_length=100)
+    title = models.CharField(max_length=20,verbose_name='عنوان')
+    description = models.TextField(verbose_name='توضیحات')
+    slug = models.SlugField(max_length=100,verbose_name='اسلاگ')
     # CHOISEFIELD
-    status=models.CharField(max_length=2,choices=Status.choices,default=Status.DRAFT)
+    status=models.CharField(max_length=2,choices=Status.choices,default=Status.DRAFT,verbose_name='وضعیت')
     # relations
-    author=models.ForeignKey(User, on_delete=models.CASCADE,related_name="user_post")
+    author=models.ForeignKey(User, on_delete=models.CASCADE,related_name="user_post",verbose_name='نویسنده')
     #date
-    publish = models.DateTimeField(default=timezone.now)
-    create = models.DateTimeField(auto_now_add=True)
-    update = models.DateTimeField(auto_now=True)
+    publish = jmodels.jDateTimeField(default=timezone.now,verbose_name='تاریخ انتشار')
+    create = jmodels.jDateTimeField(auto_now_add=True,verbose_name='ناریخ تولید')
+    update = jmodels.jDateTimeField(auto_now=True,verbose_name='تاریخ بروزرسانی')
 
-    objects = models.Manager()
+    # objects = models.Manager()
+    objects = jmodels.jManager()
     published = publishedManager()
 
     class Meta:
@@ -43,9 +45,12 @@ class Post(models.Model):
             models.Index(fields=['-publish'])
 
         ]
+        verbose_name_plural="پست ها"
 
 
     #over_ridemkk
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse('blog:PostDetail',args=[self.id])

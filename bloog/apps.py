@@ -4,3 +4,4 @@ from django.apps import AppConfig
 class BloogConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'bloog'
+    verbose_name="وبلاگ"

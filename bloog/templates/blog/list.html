@@ -4,7 +4,7 @@
     <h1>postlist</h1>
     {% for post in posts %}
     <h2>
-        <a href="">{{ post }}</a>
+        <a href="{% url 'blog:PostDetail' post.id %}"> {{ post.title }} s</a>
     </h2>
     <p>
         {{post.description | truncatewords:2 }}
