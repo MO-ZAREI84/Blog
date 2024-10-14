@@ -47,6 +47,7 @@ class Post(models.Model):
         ]
         verbose_name_plural="پست ها"
 
+    
 
     #over_ridemkk
     def __str__(self):
@@ -54,4 +55,32 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('blog:PostDetail',args=[self.id])
-        
+
+
+class Ticket(models.Model):
+    message=models.TextField(verbose_name='پیام')
+    name=models.CharField(max_length=250,verbose_name=' نام')
+    email=models.EmailField(verbose_name='ایمیل')
+    phone=models.IntegerField(verbose_name='شماره')
+    subjects=models.CharField(max_length=240,verbose_name='موضوع')
+
+    class Meta:
+        verbose_name='تیکت'
+        verbose_name_plural='تیکتها'
+
+    def __str__(self):
+        return self.subjects
+class Comment(models.Model):
+    post=models.ForeignKey(Post,verbose_name='پست',on_delete=models.CASCADE,related_name='comments')
+    name=models.CharField(max_length=250,verbose_name=' نام')
+    body=models.TextField(verbose_name='پیام')
+    publish = jmodels.jDateTimeField(default=timezone.now,verbose_name='تاریخ انتشار')
+    create = jmodels.jDateTimeField(auto_now_add=True,verbose_name='ناریخ تولید')
+    active=models.BooleanField(default=True, verbose_name=' فعالیت')
+    
+    class Meta:
+        verbose_name='کامنت '
+        verbose_name_plural = ' کامنت ها'
+
+    def __str__(self):
+        return self.name

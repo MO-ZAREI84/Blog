@@ -1,0 +1,48 @@
+{% extends 'parent/base.html' %}
+{% block title %} form {% endblock %}
+{% block content %}
+    <h1> forms </h1>
+    <form method="post">
+        {% csrf_token %}
+
+        نام و نام خانوادگی:
+        <input type="text" name="name" required>
+        <br>
+        ایمیل:
+        <input type="email" name="email">
+        <br>
+        شماره تماس:
+        <input type="text" name="phone">
+        <br>
+        متن:
+        <textarea name="message"></textarea>
+        <br>
+
+        <label for="subjects">موضوع:</label>
+<select name="subjects" id="subject" required>
+    <option value="">موضوع را انتخاب کنید</option>
+    <option value="پیشنهادات">پیشنهادات</option>
+    <option value="انتقادات">انتقادات</option>
+    <option value="گزارش">گزارش</option>
+</select>
+
+        <br>
+        <button type="submit">ارسال تیکت</button>
+    </form>
+
+    {% if form.errors %}
+        لطفا خطای زیر را رفع کنید
+        <br>
+        {% for field in form %}
+            {% if field.errors %}
+                {% for error in field.errors %}
+                    {{ field.label }} : {{ error }}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    {% if form.non_field_errors %}
+        {{ form.non_field_errors }}
+    {% endif %}
+{% endblock %}

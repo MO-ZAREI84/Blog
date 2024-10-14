@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models  import Post
+from .models  import Post,Ticket,Comment
 
 
 # Register your models here.
@@ -16,3 +16,13 @@ class PostAdmin(admin.ModelAdmin):
     prepopulated_fields={ "slug" : ['title'] }
     list_editable=['status']
     list_display_links=['title','author']
+
+@admin.register(Ticket)
+class PostAdmin(admin.ModelAdmin):
+    list_display = ['name','email',]
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ['post','name','create','active']
+    list_filter = ['active']
+    search_fields=['body','name']
+    list_editable=['active']

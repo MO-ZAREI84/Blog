@@ -1,0 +1,14 @@
+{% extends 'parent/base.html' %}
+{% block title %} post comment {% endblock %}
+{% block content %}
+
+{% if comment%}
+ کامنت شما با موفقیت ثبت شد
+ <a href="{{ post.get_absolute.url }}"> بازگشت به صفحه پست</a>
+{% endif %}
+<form method="post" action="{% url 'blog:post_comment' post.id%}">
+    {% csrf_token%}
+    {{form.as_p}}
+    <button type="submit">ارسال تیکت</button>
+</form>
+{% endblock %}
