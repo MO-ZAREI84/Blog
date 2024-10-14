@@ -38,6 +38,7 @@ class Post(models.Model):
     # objects = models.Manager()
     objects = jmodels.jManager()
     published = publishedManager()
+    reading_time=models.PositiveIntegerField(verbose_name='زمان مطالعه',default='14')
 
     class Meta:
         ordering = ['-publish']
