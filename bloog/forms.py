@@ -8,7 +8,7 @@ class TicketForm(forms.Form):
     #     ('گزارش', 'گزارش'),
     # )
     message=forms.CharField(widget=forms.Textarea,required=True)
-    name=forms.CharField(max_length=250,required=True)
+    name=forms.CharField(max_length=250,required=True,widget=forms.TextInput(attrs={'placeholder':'نام'}))
     email=forms.EmailField()
     phone=forms.IntegerField(required=True)
     subjects = forms.ChoiceField(
@@ -24,3 +24,10 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model=Comment
         fields=['name','body']
+        widget={
+            'body':forms.TextInput(attrs={
+                'placeholder':'متن'
+            }
+
+            )
+        }
