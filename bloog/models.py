@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django_jalali.db import models as jmodels
 from django.urls import reverse
 
+
 #Manager
 class publishedManager(models.Manager):
     def get_queryset(self):
@@ -31,12 +32,12 @@ class Post(models.Model):
     # relations
     author=models.ForeignKey(User, on_delete=models.CASCADE,related_name="user_post",verbose_name='نویسنده')
     #date
-    publish = jmodels.jDateTimeField(default=timezone.now,verbose_name='تاریخ انتشار')
-    create = jmodels.jDateTimeField(auto_now_add=True,verbose_name='ناریخ تولید')
-    update = jmodels.jDateTimeField(auto_now=True,verbose_name='تاریخ بروزرسانی')
+    publish = models.DateTimeField(default=timezone.now,verbose_name='تاریخ انتشار')
+    create = models.DateTimeField(auto_now_add=True,verbose_name='ناریخ تولید')
+    update = models.DateTimeField(auto_now=True,verbose_name='تاریخ بروزرسانی')
 
     # objects = models.Manager()
-    objects = jmodels.jManager()
+    objects = models.Manager()
     published = publishedManager()
     reading_time=models.PositiveIntegerField(verbose_name='زمان مطالعه',default='14')
 
@@ -62,7 +63,7 @@ class Ticket(models.Model):
     message=models.TextField(verbose_name='پیام')
     name=models.CharField(max_length=250,verbose_name=' نام')
     email=models.EmailField(verbose_name='ایمیل')
-    phone=models.IntegerField(verbose_name='شماره')
+    phone=models.CharField(max_length=11,verbose_name='شماره')
     subjects=models.CharField(max_length=240,verbose_name='موضوع')
 
     class Meta:
@@ -75,8 +76,8 @@ class Comment(models.Model):
     post=models.ForeignKey(Post,verbose_name='پست',on_delete=models.CASCADE,related_name='comments')
     name=models.CharField(max_length=250,verbose_name=' نام')
     body=models.TextField(verbose_name='پیام')
-    publish = jmodels.jDateTimeField(default=timezone.now,verbose_name='تاریخ انتشار')
-    create = jmodels.jDateTimeField(auto_now_add=True,verbose_name='ناریخ تولید')
+    publish = models.DateTimeField(default=timezone.now,verbose_name='تاریخ انتشار')
+    create = models.DateTimeField(auto_now_add=True,verbose_name='ناریخ تولید')
     active=models.BooleanField(default=True, verbose_name=' فعالیت')
     
     class Meta:
