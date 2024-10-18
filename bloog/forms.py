@@ -31,3 +31,5 @@ class CommentForm(forms.ModelForm):
 
             )
         }
+class SearchForm(forms.Form):
+    query=forms.CharField(label='search',max_length=100)

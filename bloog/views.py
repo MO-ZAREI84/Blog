@@ -9,7 +9,25 @@ from django.views.decorators.http import require_POST
 
 def index(request):
     return render(request,'blog/index.html')
-
+def post_search(request):
+    query = None
+    result = []
+    
+    # بررسی اینکه آیا 'query' در request.GET وجود دارد
+    if 'query' in request.GET:
+        form = SearchForm(data=request.GET)
+        
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            # جستجو در عنوان‌های پست
+            result = Post.published.filter(title__icontains=query)
+    
+    context = {
+        'query': query,
+        'result': result,
+    }
+    
+    return render(request, 'blog/search.html', context)
 # def PostList(request):
 #     posts=Post.published.all()
 #     paginator=Paginator(posts,2)

@@ -1,0 +1,20 @@
+{% extends 'parent/base.html' %}
+{% block title %} post list search {% endblock %}
+{% block content %}
+{% if query%}
+
+{{result.count}}:نتایح برای{{query}}
+
+{% endif %}
+<br>
+    {% for post in result %}
+    
+         <a href="{{post.get_absolute_url }}"> {{ post.title }} </a>
+        <p>{{post.description }}</p>
+        {% empty %}
+        هیج نتیجه یافت نشد
+
+{% endfor %}
+
+<hr>
+{% endblock %}
