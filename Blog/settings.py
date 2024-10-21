@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bloog.apps.BloogConfig',
     'django_jalali',
+    'django.contrib.postgres',
 ]
 
 MIDDLEWARE = [
