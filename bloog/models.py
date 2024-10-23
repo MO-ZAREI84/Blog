@@ -32,9 +32,9 @@ class Post(models.Model):
     # relations
     author=models.ForeignKey(User, on_delete=models.CASCADE,related_name="user_post",verbose_name='نویسنده')
     #date
-    publish = models.DateTimeField(default=timezone.now,verbose_name='تاریخ انتشار')
-    create = models.DateTimeField(auto_now_add=True,verbose_name='ناریخ تولید')
-    update = models.DateTimeField(auto_now=True,verbose_name='تاریخ بروزرسانی')
+    publish = jmodels.jDateTimeField(default=timezone.now,verbose_name='تاریخ انتشار')
+    create = jmodels.jDateTimeField(auto_now_add=True,verbose_name='ناریخ تولید')
+    update = jmodels.jDateTimeField(auto_now=True,verbose_name='تاریخ بروزرسانی')
 
     # objects = models.Manager()
     objects = models.Manager()
@@ -86,3 +86,9 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.name
+class ImageField(models.Model):
+    post=models.ForeignKey(Post,verbose_name='تصویر',on_delete=models.CASCADE,related_name='images')
+    image_file=models.ImageField(upload_to="post_images/")
+    title = models.CharField(max_length=20,verbose_name='عنوان',null=True,blank=True)
+    description = models.TextField(verbose_name='توضیحات',null=True,blank=True)
+    create = jmodels.jDateTimeField(auto_now_add=True,verbose_name='ناریخ تولید')

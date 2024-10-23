@@ -6,7 +6,8 @@ from django.views.generic import ListView, DetailView
 from .forms import*
 from django.views.decorators.http import require_POST
 from django.db.models import Q
-from django.contrib.postgres.search import SearchVector
+from django.contrib.postgres.search import SearchVector,SearchQuery
+
 # Create your views here.
 
 def index(request):
@@ -21,8 +22,10 @@ def post_search(request):
         
         if form.is_valid():
             query = form.cleaned_data['query']
+            search_query = SearchQuery(query)
             # جستجو در عنوان‌های پست
-            result = Post.published.annotate(search=SearchVector('title','description')).filter(search=query)
+            result = Post.published.annotate(search=SearchVector('title','description')).filter(search=search_query
+            )
             # result = Post.published.filter(Q(title__icontains=query)& Q(description__icontains=query))->and 
             # result = Post.published.filter(Q(title__icontains=query) ^ Q(description__icontains=query))->xor
     
