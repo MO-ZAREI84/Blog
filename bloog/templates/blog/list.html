@@ -6,9 +6,11 @@
     <ol style="--length: {{posts|length}}" role="list">
     {% for post in posts %}
     <li style="--i: {{forloop.counter}}">
+        <img src="{{ post.images.first.image_file.url }}" alt="{{post.images.first.title  }}" style="weidh:400px;">
         <h3> <a href="{{post.get_absolute_url}}"> {{ post.title }} </a> </h3>
+
         <p>{{post.description | truncatewords:5 }}</p>
-        <img src="{{ post.images.first.image_field.url }}" alt="{{post.images.frirst.title  }}">
+
     </li>
 {% endfor %}
 </ol>

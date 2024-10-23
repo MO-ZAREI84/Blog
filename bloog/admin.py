@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models  import Post,Ticket,Comment
+from .models  import *
 
 
 # Register your models here.
@@ -26,3 +26,7 @@ class CommentAdmin(admin.ModelAdmin):
     list_filter = ['active']
     search_fields=['body','name']
     list_editable=['active']
+@admin.register(ImageField)
+class ImageAdmin(admin.ModelAdmin):
+    list_display = ['post','title','create']
+ 

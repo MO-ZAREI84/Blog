@@ -91,4 +91,14 @@ class ImageField(models.Model):
     image_file=models.ImageField(upload_to="post_images/")
     title = models.CharField(max_length=20,verbose_name='عنوان',null=True,blank=True)
     description = models.TextField(verbose_name='توضیحات',null=True,blank=True)
-    create = jmodels.jDateTimeField(auto_now_add=True,verbose_name='ناریخ تولید')
+    create = models.DateTimeField(auto_now_add=True,verbose_name='ناریخ تولید')
+    class Meta:
+        ordering = ['-create']
+        indexes=[
+            models.Index(fields=['create'])
+
+        ]
+        verbose_name='تصویر'
+        verbose_name_plural='تصاویر'
+    def __str__(self):
+        return self.title if self.title else "None"
