@@ -1,5 +1,5 @@
 from django import forms
-from .models import Comment
+from .models import Comment,Post
 
 class TicketForm(forms.Form):
     # SUBJECT_CHOICES = (
@@ -34,7 +34,8 @@ class CommentForm(forms.ModelForm):
 class SearchForm(forms.Form):
     query=forms.CharField(label='search',max_length=100)
 class CreatePostForm(forms.ModelForm):
-    image1 = forms.ImageField(label='1تصاویر')
-    image2 = forms.ImageField(label='2تصاویر')
-    model = post
-    fields= ['title', 'description']
+    image1 = forms.ImageField(label='1تصاویرو',required=False)
+    image2 = forms.ImageField(label='2تصاویرو',required=False)
+    class Meta:
+        model = Post
+        fields= ['title', 'description']

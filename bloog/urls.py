@@ -16,7 +16,7 @@ urlpatterns = [
   path('Posts/<post_id>/comment',post_comment,name='post_comment'),
   path('search/', post_search, name='post_search'),
   path('profile/',Profile,name='profile'),
-  path('createpost/',Createpost)
+  path('createpost/',Createpost,name='createpost')
 
   # path('Posts/<pk>',views.PostDetailView.as_view(),name='Post_Detail'),
 ]

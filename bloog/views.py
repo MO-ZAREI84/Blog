@@ -122,14 +122,19 @@ def Profile(request):
         'posts':posts,
     }
     return render(request,'blog/profile.html',context)
+
 def Createpost(request):
-    if request.method == POST:
-        form=CreatePostForm(request.POST,request.FILES)
-        if form_is.valid():
-            post=form.save(commit=False)
-            post.author=request.user
-            post.images.add(request)
-    context={
-        
-    }
-    return render(request,'Createpost',context)
+    if request.method == "POST":
+        form = CreatePostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            
+            # ایجاد و ذخیره‌ی تصاویر
+            ImageField.objects.create(image_file=form.cleaned_data['image1'], post=post)
+            ImageField.objects.create(image_file=form.cleaned_data['image2'], post=post)
+            return HttpResponse('hiii')
+    else:
+        form = CreatePostForm()
+    return render(request, 'blog/createpost.html', {'form': form})

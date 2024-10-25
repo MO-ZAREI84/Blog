@@ -2,7 +2,12 @@
 {% block title %} post list {% endblock %}
 {% block content %}
     <h1>create post</h1>
-    <a href="{% url 'blog:createpost.html' %}"></a>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+        {{form.errors}}
+        <input type="submit" value="ثبت">
+    </form>
 
 <hr>
 {% endblock %}
