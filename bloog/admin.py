@@ -7,6 +7,13 @@ from .models  import *
 admin.sites.AdminSite.site_header = "پنل مدیریت جنگو"
 admin.sites.AdminSite.site_title="پنل "
 admin.sites.AdminSite.site_index="پنل مدیریت"
+class ImageInlineAdmin(admin.TabularInline):
+    model=ImageField
+    extra=1
+    readonly_fields=('id','title')
+class commentInline(admin.StackedInline):
+    model=Comment
+    extra=1
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     list_display = ['title','author','publish','status']
@@ -16,6 +23,7 @@ class PostAdmin(admin.ModelAdmin):
     prepopulated_fields={ "slug" : ['title'] }
     list_editable=['status']
     list_display_links=['title','author']
+    inlines= [ImageInlineAdmin,commentInline]
 
 @admin.register(Ticket)
 class PostAdmin(admin.ModelAdmin):
@@ -29,4 +37,3 @@ class CommentAdmin(admin.ModelAdmin):
 @admin.register(ImageField)
 class ImageAdmin(admin.ModelAdmin):
     list_display = ['post','title','create']
- 

@@ -114,3 +114,22 @@ def post_comment(request, post_id):
     }
     
     return render(request, 'forms/comment.html', context)
+def Profile(request):
+    user=request.user
+    posts= Post.published.filter(author=user)
+    context={
+        'user':user,
+        'posts':posts,
+    }
+    return render(request,'blog/profile.html',context)
+def Createpost(request):
+    if request.method == POST:
+        form=CreatePostForm(request.POST,request.FILES)
+        if form_is.valid():
+            post=form.save(commit=False)
+            post.author=request.user
+            post.images.add(request)
+    context={
+        
+    }
+    return render(request,'Createpost',context)
