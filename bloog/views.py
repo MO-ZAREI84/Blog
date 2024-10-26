@@ -134,7 +134,34 @@ def Createpost(request):
             # ایجاد و ذخیره‌ی تصاویر
             ImageField.objects.create(image_file=form.cleaned_data['image1'], post=post)
             ImageField.objects.create(image_file=form.cleaned_data['image2'], post=post)
-            return HttpResponse('hiii')
+            return redirect('blog:profile')
     else:
         form = CreatePostForm()
     return render(request, 'blog/createpost.html', {'form': form})
+def DeletePost(request,post_id):
+    post=get_object_or_404(Post, id=post_id)
+    if request.method == 'POST':
+        post.delete()
+        return redirect("blog:profile")
+    else:
+        return render(request,'forms/delete_post.html',{'post':post})
+def EditPost(request,post_id):
+    post=get_object_or_404(Post,id=post_id)
+    if request.method == 'POST':
+        form=CreatePostForm(request.POST,request.FILES,instance=post)
+        if form.is_valid():
+            post=form.save(commit=False)
+            post.author=request.user
+            post.save()
+            ImageField.objects.create(image_file=form.cleaned_data['image1'], post=post)
+            ImageField.objects.create(image_file=form.cleaned_data['image2'], post=post)
+            return redirect('blog:profile')
+        else:
+             form = CreatePostForm(instance=post)
+    return render(request, 'blog/createpost.html', {'form': form,'post':post})
+def DeleteImage(request,post_id):
+    image=get_object_or_404(ImageField,id=post_id)
+    if request.method == 'POST':
+        image.delete()
+        return redirect('blog:profile')
+    return render(request,'forms/delete_image.html',{'image':image})

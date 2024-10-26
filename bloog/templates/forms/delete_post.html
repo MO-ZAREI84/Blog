@@ -1,0 +1,11 @@
+{% extends 'parent/base.html' %}
+{% block title %} post comment {% endblock %}
+{% block content %}
+<h1>آیا از حذف {{post.title}}مطمینید</h1>
+<a href="{%url 'blog:profile'%}">بازگشت به صفحه پروفایل</a>
+<br>
+<form method="post">
+ {% csrf_token %}
+ <input type="submit" value="حذف">
+</form>
+{% endblock%}
